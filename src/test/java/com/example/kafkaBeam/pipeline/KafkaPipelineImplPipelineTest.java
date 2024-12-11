@@ -20,7 +20,6 @@ class KafkaPipelineImplPipelineTest {
     void testJsonToPersonFn() {
         KV<String, String> kv = KV.of("key", "{\"name\":\"Jam Jam\",\"address\":\"123 ABC St\",\"dateOfBirth\":\"2000-03-27\"}");
         KafkaPipelineImplPipeline.JsonToPersonFn jsonToPersonFn = new KafkaPipelineImplPipeline.JsonToPersonFn();
-
         Person person = jsonToPersonFn.apply(kv);
         assertEquals("Jam Jam", person.getName());
         assertEquals("123 ABC St", person.getAddress());
@@ -32,7 +31,6 @@ class KafkaPipelineImplPipelineTest {
         PersonProcessor personProcessor = Mockito.mock(PersonProcessor.class);
         Mockito.when(personProcessor.processPerson(Mockito.any(Person.class)))
                 .thenReturn(KV.of("even", "{\"name\":\"Jam Jam\",\"address\":\"123 ABC St\",\"dateOfBirth\":\"2000-03-27\"}"));
-
         KafkaPipelineImplPipeline.PersonToKVFn personToKVFn = new KafkaPipelineImplPipeline.PersonToKVFn(personProcessor);
         Person person = new Person();
         person.setName("Jam Jam");
